@@ -1,0 +1,8 @@
+spring:
+  application:
+    name:
+      point-batch
+
+  batch:
+    job:
+      enabled: false
