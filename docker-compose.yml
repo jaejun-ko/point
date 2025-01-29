@@ -1,0 +1,35 @@
+services:
+  elasticmq:
+    image: softwaremill/elasticmq
+    ports:
+      - "9324:9324"
+    environment:
+      - "SQS_URL=http://localhost:9324"
+    networks:
+      - pointnet
+  h2:
+    image: oscarfonts/h2
+    ports:
+      - "1521:1521"
+      - "8088:81"
+    environment:
+      - "DATABASE_NAME=point"
+      - "H2_OPTIONS=-ifNotExists"
+      - "H2_USER=sa"
+      - "H2_PASSWORD="
+    volumes:
+      - ./h2/data:/opt/h2-data
+    networks:
+      - pointnet
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/data:/data
+    networks:
+      - pointnet
+
+networks:
+  pointnet:
+    driver: bridge
