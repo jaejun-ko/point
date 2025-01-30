@@ -94,9 +94,10 @@ public class PointDto {
     public static class ExpirePointRequest {
         @Min(value = 1) @Max(Long.MAX_VALUE)
         private long pointId;
+        private boolean force;
 
         public PointCommand.ExpirePoint toCommand() {
-            return new PointCommand.ExpirePoint(pointId);
+            return new PointCommand.ExpirePoint(pointId, force);
         }
     }
 

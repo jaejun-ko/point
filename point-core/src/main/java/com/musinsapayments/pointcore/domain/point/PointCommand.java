@@ -78,5 +78,6 @@ public class PointCommand {
     @AllArgsConstructor
     public static class ExpirePoint {
         private long pointId;
+        private boolean force;
     }
 }

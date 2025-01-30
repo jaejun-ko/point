@@ -60,9 +60,12 @@ public class Point extends BaseTimeEntity {
     private LocalDate expireAt;
 
     @Column
+    private boolean expired;
+
+    @Column
     private long orderId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "related_point_id")
     private Point relatedPoint;
 
@@ -77,6 +80,7 @@ public class Point extends BaseTimeEntity {
             PointTransactionType transactionType,
             boolean manual,
             LocalDate expireAt,
+            boolean expired,
             long orderId,
             Point relatedPoint
     ) {
@@ -94,6 +98,7 @@ public class Point extends BaseTimeEntity {
         this.transactionType = transactionType;
         this.manual = manual;
         this.expireAt = expireAt;
+        this.expired = expired;
         this.orderId = orderId;
         this.relatedPoint = relatedPoint;
     }
@@ -112,11 +117,16 @@ public class Point extends BaseTimeEntity {
         remainingAmount -= amount;
     }
 
-    public boolean isExpired() {
+    public boolean isExpiredByDate() {
         return expireAt != null && expireAt.isBefore(LocalDate.now());
     }
 
     public void expireForce() {
         expireAt = LocalDate.now().plusDays(-1);
+        expired = true;
+    }
+
+    public void expire() {
+        expired = true;
     }
 }

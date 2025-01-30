@@ -214,8 +214,8 @@ class PointTest {
     }
 
     @Test
-    @DisplayName("포인트가 만료되었다면 true 를 반환한다.")
-    void isExpired() {
+    @DisplayName("포인트가 만료일 이후이라면 true 를 반환한다.")
+    void isExpiredByDate() {
         // given
         User user = new User("테스트 유저", 1000);
         Point point = Point.builder()
@@ -226,14 +226,14 @@ class PointTest {
                 .expireAt(LocalDate.now().minusDays(1))
                 .build();
         // when
-        boolean result = point.isExpired();
+        boolean result = point.isExpiredByDate();
         // then
         assertTrue(result);
     }
 
     @Test
-    @DisplayName("포인트가 만료되지 않았다면 false 를 반환한다.")
-    void isExpired_2() {
+    @DisplayName("포인트가 만료일 이전이라면 false 를 반환한다.")
+    void isExpired_ByDate_2() {
         // given
         User user = new User("테스트 유저", 1000);
         Point point = Point.builder()
@@ -244,7 +244,7 @@ class PointTest {
                 .expireAt(LocalDate.now().plusDays(1))
                 .build();
         // when
-        boolean result = point.isExpired();
+        boolean result = point.isExpiredByDate();
         // then
         assertFalse(result);
     }

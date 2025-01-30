@@ -3,6 +3,9 @@ spring:
     name:
       point-batch
 
+  profiles:
+    active: local
+
   batch:
     job:
       enabled: false

@@ -128,7 +128,7 @@ public class PointServiceImpl implements PointService {
             var cancelPointUsage = new PointUsage(point, relatedPoint, deduction);
             pointStore.store(cancelPointUsage);
 
-            if (relatedPoint.isExpired()) {
+            if (relatedPoint.isExpiredByDate()) {
                 var newAddPoint = Point.builder()
                         .user(point.getUser())
                         .amount(deduction)
@@ -150,6 +150,7 @@ public class PointServiceImpl implements PointService {
         }
     }
 
+    @Transactional
     @Override
     public void expirePoint(PointCommand.ExpirePoint command) {
 
@@ -157,16 +158,20 @@ public class PointServiceImpl implements PointService {
         if (point.getTransactionType() != PointTransactionType.ADD) return; // 적립 포인트만 만료 가능
         if (point.isExpired()) return;
 
-        point.expireForce();
+        if (command.isForce()) {
+            point.expireForce();
+        }
 
         var expirePoint = Point.builder()
                 .user(point.getUser())
                 .amount(-point.getRemainingAmount())
-                .remainingAmount(0)
+                .remainingAmount(-point.getRemainingAmount())
                 .transactionType(PointTransactionType.EXPIRE)
                 .relatedPoint(point)
                 .build();
         pointStore.store(expirePoint);
+
+        point.use(point.getRemainingAmount());
     }
 
     @Transactional(readOnly = true)

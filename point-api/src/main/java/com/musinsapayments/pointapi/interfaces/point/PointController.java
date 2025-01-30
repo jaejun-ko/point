@@ -68,8 +68,10 @@ public class PointController {
     }
 
     // 원활한 테스트를 위해 특정 적립 포인트를 강제로 만료시킬 수 있는 API 를 제공합니다.
-    @PostMapping("/expire")
+    @PostMapping("/expire-force")
     public ApiResponse expirePoint(@Valid @RequestBody PointDto.ExpirePointRequest request) {
+
+        request.setForce(true);
 
         var command = request.toCommand();
         pointFacade.expirePoint(command);
