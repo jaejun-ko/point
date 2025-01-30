@@ -1,12 +1,12 @@
 services:
-  elasticmq:
-    image: softwaremill/elasticmq
-    ports:
-      - "9324:9324"
-    environment:
-      - "SQS_URL=http://localhost:9324"
-    networks:
-      - pointnet
+#  elasticmq:
+#    image: softwaremill/elasticmq
+#    ports:
+#      - "9324:9324"
+#    environment:
+#      - "SQS_URL=http://localhost:9324"
+#    networks:
+#      - pointnet
   h2:
     image: oscarfonts/h2
     ports:

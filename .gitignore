@@ -27,3 +27,7 @@
 # except .gitignore file
 !/.gitignore
 !/.github
+
+/**/redis
+/**/h2
+

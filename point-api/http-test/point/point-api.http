@@ -29,7 +29,6 @@ Content-Type: application/json
 {
   "userId": 1,
   "amount": 500,
-  "expireAfterDays": 30,
   "orderId": 1
 }
 
@@ -38,7 +37,7 @@ POST http://localhost:8080/api/v1/points/expire-force
 Content-Type: application/json
 
 {
-  "pointId": 1
+  "pointId": 3
 }
 
 ### 포인트 사용 취소
@@ -47,6 +46,6 @@ Content-Type: application/json
 
 {
   "userId": 1,
-  "pointId": 2,
+  "pointId": 4,
   "amount": 500
 }
