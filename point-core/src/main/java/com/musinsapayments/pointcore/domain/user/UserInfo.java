@@ -8,9 +8,9 @@ public class UserInfo {
     @Getter
     @RequiredArgsConstructor
     public static class Main {
-        private final Long id;
+        private final long id;
         private final String name;
-        private final Integer maxPoints;
+        private final int maxPoints;
 
         public Main(User user) {
             this.id = user.getId();

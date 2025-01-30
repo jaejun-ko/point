@@ -13,6 +13,7 @@ public class UserStoreImpl implements UserStore {
 
     @Override
     public User store(User user) {
+
         return userRepository.save(user);
     }
 }

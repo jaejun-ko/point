@@ -19,7 +19,7 @@ public class UserCommand {
     @Getter
     @AllArgsConstructor
     public static class ChangeMaxPoints {
-        private Long id;
+        private long id;
         private int maxPoints;
     }
 }

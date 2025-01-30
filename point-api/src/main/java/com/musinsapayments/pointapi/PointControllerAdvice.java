@@ -6,12 +6,14 @@ import com.musinsapayments.pointcore.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
 
+import static com.musinsapayments.pointcore.exception.CommonErrorCode.COMMON_INVALID_ARGUMENTS;
 import static com.musinsapayments.pointcore.exception.CommonErrorCode.COMMON_SYSTEM_ERROR;
 
 @Slf4j
@@ -36,6 +38,17 @@ public class PointControllerAdvice {
         log.error("server error ", e);
 
         return ApiResponse.fail(COMMON_SYSTEM_ERROR);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    protected ApiResponse<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+//        return new ResponseEntity<>(e.getBindingResult().getFieldErrors().get(0).getDefaultMessage() ,HttpStatus.BAD_REQUEST);
+        String message = "%s : %s".formatted(
+                e.getBindingResult().getFieldErrors().get(0).getField(),
+                e.getBindingResult().getFieldErrors().get(0).getDefaultMessage()
+        );
+        return ApiResponse.fail(message, COMMON_INVALID_ARGUMENTS);
     }
 
     /**

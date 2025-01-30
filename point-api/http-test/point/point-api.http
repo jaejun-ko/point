@@ -1,0 +1,52 @@
+### 포인트 적립
+POST http://localhost:8080/api/v1/points/add
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "amount": 1000,
+  "manual": false,
+  "expireAfterDays": 30,
+  "orderId": 0
+}
+
+### 포인트 적립 취소
+POST http://localhost:8080/api/v1/points/add/cancel
+Content-Type: application/json
+
+{
+  "pointId": 1
+}
+
+### 포인트 조회
+GET http://localhost:8080/api/v1/points/1
+Content-Type: application/json
+
+### 포인트 사용
+POST http://localhost:8080/api/v1/points/use
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "amount": 1000,
+  "expireAfterDays": 30,
+  "orderId": 1
+}
+
+### 포인트 강제 만료
+POST http://localhost:8080/api/v1/points/expire
+Content-Type: application/json
+
+{
+  "pointId": 3
+}
+
+### 포인트 사용 취소
+POST http://localhost:8080/api/v1/points/use/cancel
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "pointId": 2,
+  "amount": 1000
+}

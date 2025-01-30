@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import static com.musinsapayments.pointcore.exception.user.UserErrorCode.INVALID_MAX_POINTS;
+import static com.musinsapayments.pointcore.exception.user.UserErrorCode.INVALID_NAME;
 
 @Getter
 @NoArgsConstructor
@@ -21,7 +22,7 @@ public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable = false, length = 50)
     private String name;
@@ -30,6 +31,10 @@ public class User extends BaseTimeEntity {
     private int maxPoints;
 
     public User(String name, int maxPoints) {
+
+        if (name == null || name.isBlank() || name.length() > 50) throw new UserException(INVALID_NAME);
+        if (maxPoints < 0 || maxPoints > 2000000000) throw new UserException(INVALID_MAX_POINTS);
+
         this.name = name;
         this.maxPoints = maxPoints;
     }

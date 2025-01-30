@@ -5,7 +5,6 @@ import com.musinsapayments.pointcore.domain.user.UserInfo;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -33,7 +32,7 @@ public class UserDto {
     public static class ChangeMaxPointsRequest {
 
         @Min(1) @Max(Long.MAX_VALUE)
-        private Long id;
+        private long id;
         @Min(0) @Max(2000000000)
         private int maxPoints;
 
@@ -46,7 +45,7 @@ public class UserDto {
     @RequiredArgsConstructor
     public static class Main {
 
-        private final Long id;
+        private final long id;
         private final String name;
         private final int maxPoints;
 

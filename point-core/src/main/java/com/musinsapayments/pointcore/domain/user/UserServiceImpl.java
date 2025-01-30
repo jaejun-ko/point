@@ -2,6 +2,7 @@ package com.musinsapayments.pointcore.domain.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -10,6 +11,7 @@ public class UserServiceImpl implements UserService {
     private final UserReader userReader;
     private final UserStore userStore;
 
+    @Transactional
     @Override
     public UserInfo.Main registerUser(UserCommand.RegisterUser command) {
 
@@ -19,6 +21,7 @@ public class UserServiceImpl implements UserService {
         return new UserInfo.Main(storedUser);
     }
 
+    @Transactional
     @Override
     public UserInfo.Main changeMaxPoints(UserCommand.ChangeMaxPoints command) {
 
@@ -29,6 +32,7 @@ public class UserServiceImpl implements UserService {
         return new UserInfo.Main(storedUser);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserInfo.Main getUser(Long id) {
 
