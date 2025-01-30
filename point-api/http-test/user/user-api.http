@@ -1,0 +1,21 @@
+### 사용자 등록
+POST http://localhost:8080/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "신규 사용자",
+  "maxPoints": 10000
+}
+
+### 보유 가능한 최대 포인트 수정
+PUT http://localhost:8080/api/v1/users/change-max-points
+Content-Type: application/json
+
+{
+  "id": 1,
+  "maxPoints": 10000000
+}
+
+### 사용자 조회
+GET http://localhost:8080/api/v1/users/1
+Content-Type: application/json
