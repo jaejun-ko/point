@@ -6,10 +6,12 @@ import com.musinsapayments.pointcore.domain.point.PointReader;
 import com.musinsapayments.pointcore.domain.point.PointUsage;
 import com.musinsapayments.pointcore.exception.point.PointException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.musinsapayments.pointcore.configuration.CacheConfiguration.POINT_CACHE;
 import static com.musinsapayments.pointcore.exception.point.PointErrorCode.NOT_EXIST_ACTIVE_POINT_CONFIGURE;
 import static com.musinsapayments.pointcore.exception.point.PointErrorCode.POINT_NOT_EXIST;
 
@@ -21,6 +23,7 @@ public class PointReaderImpl implements PointReader {
     private final PointRepository pointRepository;
     private final PointUsageRepository pointUsageRepository;
 
+    @Cacheable(cacheNames = POINT_CACHE, key ="'active:configure'")
     @Override
     public PointConfigure getActivePointConfigure() {
         return pointConfigureRepository.findFirstByActiveIsTrue()
@@ -43,6 +46,7 @@ public class PointReaderImpl implements PointReader {
         return pointRepository.findRemainingPoints(userId);
     }
 
+    @Cacheable(cacheNames = POINT_CACHE, key = "'total:remaining:points:' + #userId")
     @Override
     public int getTotalRemainingPoints(long userId) {
         return getRemainingPoints(userId).stream()

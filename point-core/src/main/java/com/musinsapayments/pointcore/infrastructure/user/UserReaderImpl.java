@@ -4,8 +4,10 @@ import com.musinsapayments.pointcore.domain.user.User;
 import com.musinsapayments.pointcore.domain.user.UserReader;
 import com.musinsapayments.pointcore.exception.user.UserException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
+import static com.musinsapayments.pointcore.configuration.CacheConfiguration.USER_CACHE;
 import static com.musinsapayments.pointcore.exception.user.UserErrorCode.USER_NOT_EXIST;
 
 @RequiredArgsConstructor
@@ -14,6 +16,7 @@ public class UserReaderImpl implements UserReader {
 
     private final UserRepository userRepository;
 
+    @Cacheable(cacheNames = USER_CACHE, key = "'user:' + #id")
     @Override
     public User getUser(Long id) {
         return userRepository.findById(id)

@@ -3,6 +3,10 @@ repositories {
 }
 
 dependencies {
+
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")    // Java 8 Date/Time support
+    implementation("com.fasterxml.jackson.core:jackson-databind")               // Jackson JSON Processor
+
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
